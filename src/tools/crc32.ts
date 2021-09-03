@@ -31,7 +31,9 @@ export class CRC32Stream extends Transform {
   }
 
   read() {
-    return this.crc ^ -1;
+    // always return a positive number (that's what >>> 0 does)
+    // based on https://github.com/h2non/jshashes/pull/12/commits/7ac02f8085d277c7f1e4622a4d75a27122d26c65
+    return (this.crc ^ -1) >>> 0;
   }
 
   toString(radix: number = 16) {
