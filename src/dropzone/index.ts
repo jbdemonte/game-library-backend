@@ -1,7 +1,13 @@
 import { FileWatcher } from '../tools/file-watcher';
+import { createReadStream } from 'fs';
+import { hashStream } from '../tools/hash-stream';
 
 async function onFile(path: string) {
-  console.log('> ' + path)
+  const hashes = await hashStream(createReadStream(path));
+  console.log({
+    path,
+    ...hashes
+  });
 }
 
 export async function startDropZoneScan() {
