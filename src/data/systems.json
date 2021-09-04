@@ -1,0 +1,422 @@
+[
+  {
+    "id": "3do",
+    "name": "3DO",
+    "type": "console",
+    "extensions": ["bin", "chd", "cue", "iso"],
+    "screenscraper": 29
+  },
+  {
+    "id": "apple2",
+    "name": "Apple II",
+    "type": "computer",
+    "extensions": ["do", "dsk", "nib", "po"],
+    "screenscraper": 86
+  },
+  {
+    "id": "atari2600",
+    "name": "Atari 2600",
+    "type": "console",
+    "extensions": ["a26", "bin", "zip"],
+    "screenscraper": 26
+  },
+  {
+    "id": "atari5200",
+    "name": "Atari 5200",
+    "type": "console",
+    "extensions": ["a52", "atr", "bas", "bin", "car", "cdm", "xex", "xfd", "zip"],
+    "screenscraper": 40
+  },
+  {
+    "id": "atari7800",
+    "name": "Atari 7800",
+    "type": "console",
+    "extensions": ["a78", "bin", "zip"],
+    "screenscraper": 41
+  },
+  {
+    "id": "atarist",
+    "name": "Atari ST",
+    "type": "computer",
+    "extensions": [".st", "ipf", "stx", "zip"],
+    "screenscraper": 42
+  },
+  {
+    "id": "c64",
+    "name": "Commodore 64",
+    "type": "computer",
+    "extensions": ["crt", "d64", "d71", "d80", "d81", "d82", "g41", "g64", "p00", "prg", "t64", "tap", "x64", "zip"],
+    "screenscraper": 66
+  },
+  {
+    "id": "capcom",
+    "name": "Capcom Classics",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 151
+  },
+  {
+    "id": "cave",
+    "name": "Cave",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 47
+  },
+  {
+    "id": "colecovision",
+    "name": "Colecovision",
+    "type": "console",
+    "extensions": ["col", "zip"],
+    "screenscraper": 48
+  },
+  {
+    "id": "cpc",
+    "name": "Amstrad CPC",
+    "type": "computer",
+    "extensions": ["dsk", "zip"],
+    "screenscraper": 65
+  },
+  {
+    "id": "cps",
+    "name": "Capcom Play System",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 6
+  },
+  {
+    "id": "cps2",
+    "name": "Capcom Play System 2",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 7
+  },
+  {
+    "id": "cps3",
+    "name": "Capcom Play System 3",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 8
+  },
+  {
+    "id": "dataeast",
+    "name": "Data East Classics",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 162
+  },
+  {
+    "id": "dreamcast",
+    "name": "Dreamcast",
+    "type": "console",
+    "extensions": ["cdi", "chd", "gdi"],
+    "screenscraper": 23
+  },
+  {
+    "id": "fbn",
+    "name": "Final Burn Neo",
+    "type": "arcade-emulation",
+    "extensions": ["zip"],
+    "screenscraper": 75
+  },
+  {
+    "id": "fds",
+    "name": "Family Computer Disk System",
+    "type": "console",
+    "extensions": ["fds", "zip"],
+    "screenscraper": 106
+  },
+  {
+    "id": "gamecube",
+    "name": "Gamecube",
+    "type": "console",
+    "extensions": ["iso"],
+    "screenscraper": 13
+  },
+  {
+    "id": "gamegear",
+    "name": "Game Gear",
+    "type": "handheld",
+    "extensions": ["gg", "zip"],
+    "screenscraper": 21
+  },
+  {
+    "id": "gb",
+    "name": "Game Boy",
+    "type": "handheld",
+    "extensions": ["gb", "zip"],
+    "screenscraper": 9
+  },
+  {
+    "id": "gba",
+    "name": "Game Boy Advance",
+    "type": "handheld",
+    "extensions": ["gba", "zip"],
+    "screenscraper": 12
+  },
+  {
+    "id": "gbc",
+    "name": "Game Boy Color",
+    "type": "handheld",
+    "extensions": ["gb", "gbc", "zip"],
+    "screenscraper": 10
+  },
+  {
+    "id": "gw",
+    "name": "Game & Watch",
+    "type": "handheld",
+    "extensions": ["mgw", "zip"],
+    "screenscraper": 52
+  },
+  {
+    "id": "irem",
+    "type": "arcade",
+    "name": "Irem Classics",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 148
+  },
+  {
+    "id": "konami",
+    "name": "Konami Classics",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 158
+  },
+  {
+    "id": "lynx",
+    "name": "Lynx",
+    "type": "handheld",
+    "extensions": ["lnx", "zip"],
+    "screenscraper": 28
+  },
+  {
+    "id": "mame",
+    "name": "Mame",
+    "type": "arcade-emulation",
+    "extensions": ["zip"],
+    "screenscraper": 75
+  },
+  {
+    "id": "megadrive",
+    "name": "Megadrive",
+    "type": "console",
+    "extensions": ["bin", "gen", "md", "smd", "zip"],
+    "screenscraper": 1
+  },
+  {
+    "id": "msx1",
+    "name": "MSX",
+    "type": "computer",
+    "extensions": ["dsk", "mx1", "rom", "zip"],
+    "screenscraper": 113
+  },
+  {
+    "id": "msx2",
+    "name": "MSX2",
+    "type": "computer",
+    "extensions": ["dsk", "mx2", "rom", "zip"],
+    "screenscraper": 116
+  },
+  {
+    "id": "n64",
+    "name": "Nintendo 64",
+    "type": "console",
+    "extensions": ["n64", "v64", "z64"],
+    "screenscraper": 14
+  },
+  {
+    "id": "neogeo",
+    "name": "Neo-Geo",
+    "type": "console-arcade",
+    "extensions": ["zip"],
+    "screenscraper": 142
+  },
+  {
+    "id": "nes",
+    "name": "NES",
+    "type": "console",
+    "extensions": ["nes", "zip"],
+    "screenscraper": 3
+  },
+  {
+    "id": "ngp",
+    "name": "Neo-Geo Pocket",
+    "type": "handheld",
+    "extensions": ["ngc", "ngp", "zip"],
+    "screenscraper": 25
+  },
+  {
+    "id": "ngpc",
+    "name": "Neo-Geo Pocket Color",
+    "type": "handheld",
+    "extensions": ["ngc", "ngp", "zip"],
+    "screenscraper": 82
+  },
+  {
+    "id": "o2em",
+    "name": "Videopac G7000",
+    "type": "console",
+    "extensions": ["bin", "zip"],
+    "screenscraper": 104
+  },
+  {
+    "id": "pce",
+    "name": "PC Engine",
+    "type": "console",
+    "extensions": ["ccd", "cue", "pce", "sgx", "zip"],
+    "screenscraper": 31
+  },
+  {
+    "id": "pcecd",
+    "name": "PC Engine CD-Rom",
+    "type": "console",
+    "extensions": ["ccd", "cue"],
+    "screenscraper": 114
+  },
+  {
+    "id": "pgm",
+    "name": "Polygame Master",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 75
+  },
+  {
+    "id": "psikyo",
+    "name": "Psikyo",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 167
+  },
+  {
+    "id": "psp",
+    "name": "PSP",
+    "type": "handheld",
+    "extensions": ["cso", "iso", "pbp"],
+    "screenscraper": 61
+  },
+  {
+    "id": "psx",
+    "name": "Playstation",
+    "type": "console",
+    "extensions": ["cbn", "ccd", "cue", "img", "iso", "pbp", "pbp"],
+    "screenscraper": 57
+  },
+  {
+    "id": "scummvm",
+    "name": "ScummVM",
+    "type": "misc",
+    "extensions": ["scummvm"],
+    "screenscraper": 123
+  },
+  {
+    "id": "sega",
+    "name": "Sega Classics",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 147
+  },
+  {
+    "id": "sega32x",
+    "name": "Megadrive 32X",
+    "type": "console",
+    "extensions": ["32x", "bin", "smd", "zip"],
+    "screenscraper": 19
+  },
+  {
+    "id": "segacd",
+    "name": "Mega-CD",
+    "type": "console",
+    "extensions": ["cue", "iso"],
+    "screenscraper": 20
+  },
+  {
+    "id": "sg1000",
+    "name": "SG-1000",
+    "type": "console",
+    "extensions": ["sg", "zip"],
+    "screenscraper": 109
+  },
+  {
+    "id": "sms",
+    "name": "Master System",
+    "type": "console",
+    "extensions": ["sms", "zip"],
+    "screenscraper": 2
+  },
+  {
+    "id": "snes",
+    "name": "Super Nintendo",
+    "type": "console",
+    "extensions": ["mgd", "sfc", "smc", "zip"],
+    "screenscraper": 4
+  },
+  {
+    "id": "supergrafx",
+    "name": "PC Engine SuperGrafx",
+    "type": "console",
+    "extensions": ["pce", "sgx", "zip"],
+    "screenscraper": 105
+  },
+  {
+    "id": "taito",
+    "name": "Taito Classics",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 157
+  },
+  {
+    "id": "technos",
+    "name": "Technos",
+    "type": "arcade",
+    "extensions": ["7z", "iso", "zip"],
+    "screenscraper": 169
+  },
+  {
+    "id": "vectrex",
+    "name": "Vectrex",
+    "type": "console",
+    "extensions": ["vec", "zip"],
+    "screenscraper": 102
+  },
+  {
+    "id": "virtualboy",
+    "name": "Virtual Boy",
+    "type": "handheld",
+    "extensions": ["vb", "zip"],
+    "screenscraper": 11
+  },
+  {
+    "id": "wii",
+    "name": "Wii",
+    "type": "console",
+    "extensions": ["iso"],
+    "screenscraper": 16
+  },
+  {
+    "id": "wswan",
+    "name": "WonderSwan",
+    "type": "handheld",
+    "extensions": ["ws", "wsc", "zip"],
+    "screenscraper": 45
+  },
+  {
+    "id": "wswanc",
+    "name": "WonderSwan Color",
+    "type": "handheld",
+    "extensions": ["ws", "wsc", "zip"],
+    "screenscraper": 46
+  },
+  {
+    "id": "zx81",
+    "name": "ZX81",
+    "type": "computer",
+    "extensions": ["p", "tzx", "zip"],
+    "screenscraper": 77
+  },
+  {
+    "id": "zxspectrum",
+    "name": "ZX Spectrum",
+    "type": "computer",
+    "extensions": ["rzx", "scl", "tap", "trd", "tzx", "z80", "zip"],
+    "screenscraper": 76
+  }
+]

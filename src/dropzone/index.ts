@@ -1,8 +1,9 @@
-import { FileWatcher } from '../tools/file-watcher';
 import { createReadStream } from 'fs';
+import { basename } from 'path';
+import { FileWatcher } from '../tools/file-watcher';
 import { hashStream } from '../tools/hash-stream';
 import { hashZipContent, isZip } from '../tools/zip';
-import { basename } from 'path';
+import { getSystemsFromFileFolder, getSystemsFromFiles } from '../tools/systems';
 
 export interface IFileHash {
   path: string;
@@ -35,6 +36,18 @@ async function getHashFileFromZipFile(path: string): Promise<IFileHash> {
   }
 }
 
+function getRomSystemId(fileHashes: IFileHash): string {
+  const systems = getSystemsFromFiles(fileHashes.hashes.map(hash => hash.name));
+  if (systems.length === 1) {
+    return systems[0].id;
+  }
+  const system = getSystemsFromFileFolder(fileHashes.path);
+  if (system) {
+    return system.id;
+  }
+  return '';
+}
+
 async function onFile(path: string) {
   let fileHashes: IFileHash;
   if (isZip(path)) {
@@ -42,7 +55,10 @@ async function onFile(path: string) {
   } else {
     fileHashes = await getHashFileFromFile(path);
   }
-  console.log(fileHashes);
+  console.log({
+    ...fileHashes,
+    system: getRomSystemId(fileHashes),
+  });
 }
 
 export async function startDropZoneScan() {
