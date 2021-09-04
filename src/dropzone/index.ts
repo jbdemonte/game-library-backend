@@ -1,67 +1,41 @@
-import { createReadStream } from 'fs';
-import { basename } from 'path';
 import { FileWatcher } from '../tools/file-watcher';
-import { hashStream } from '../tools/hash-stream';
-import { hashZipContent, isZip } from '../tools/zip';
-import { getSystemsFromFileFolder, getSystemsFromFiles } from '../tools/systems';
-
-export interface IFileHash {
-  path: string;
-  hashes: Array<{
-    name: string;
-    crc: string;
-    md5: string;
-    length: number;
-  }>
-  zip?: true;
-}
-
-async function getHashFileFromFile(path: string): Promise<IFileHash> {
-  return {
-    path,
-    hashes: [
-      {
-        name: basename(path),
-        ...await hashStream(createReadStream(path))
-      }
-    ]
-  };
-}
-
-async function getHashFileFromZipFile(path: string): Promise<IFileHash> {
-  return {
-    path,
-    hashes: await hashZipContent(path),
-    zip: true
-  }
-}
-
-function getRomSystemId(fileHashes: IFileHash): string {
-  const systems = getSystemsFromFiles(fileHashes.hashes.map(hash => hash.name));
-  if (systems.length === 1) {
-    return systems[0].id;
-  }
-  const system = getSystemsFromFileFolder(fileHashes.path);
-  if (system) {
-    return system.id;
-  }
-  return '';
-}
-
-async function onFile(path: string) {
-  let fileHashes: IFileHash;
-  if (isZip(path)) {
-    fileHashes = await getHashFileFromZipFile(path);
-  } else {
-    fileHashes = await getHashFileFromFile(path);
-  }
-  console.log({
-    ...fileHashes,
-    system: getRomSystemId(fileHashes),
-  });
-}
+import { isZip } from '../tools/zip';
+import { IFileHash } from './lib/file-hash.interface';
+import { getHashFileFromFile, getHashFileFromZipFile } from './lib/get-hash';
+import { getRomSystemId } from './lib/rom-system';
+import { getFileSize } from '../tools/file';
+import { romModel } from '../models/rom.model';
+import { findRom } from './lib/find-rom';
 
 export async function startDropZoneScan() {
   const watcher = new FileWatcher(process.env.DROPZONE_PATH || '', onFile);
   await watcher.start();
+}
+
+async function onFile(path: string) {
+  let fileHashes: IFileHash;
+  let size: number;
+  if (isZip(path)) {
+    fileHashes = await getHashFileFromZipFile(path);
+    size = await getFileSize(path);
+  } else {
+    fileHashes = await getHashFileFromFile(path);
+    size = fileHashes.files[0].size;
+  }
+  await handleFile(fileHashes, size);
+}
+
+
+async function handleFile(fileHashes: IFileHash, size: number) {
+  const system = getRomSystemId(fileHashes);
+  if (!system) {
+    throw new Error(`System not found for file ${fileHashes.path}`);
+  }
+  let rom = await findRom(fileHashes);
+  if (rom) {
+    // already exists
+  } else {
+    rom = new romModel({...fileHashes, size, system});
+    await rom.save();
+  }
 }

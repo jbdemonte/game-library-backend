@@ -1,0 +1,9 @@
+version: "3.2" 
+services: 
+  mongo:
+    container_name: mongo_game_library
+    image: mongo:5.0
+    ports: 
+    - "27017:27017" 
+    volumes: 
+        - ./docker/mongo:/data/db

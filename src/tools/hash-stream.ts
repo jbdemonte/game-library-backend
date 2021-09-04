@@ -5,7 +5,7 @@ import { CRC32Stream } from './crc32';
 export interface IHashes {
   crc: string;
   md5: string;
-  length: number;
+  size: number;
 }
 
 export function hashStream(stream: Readable): Promise<IHashes> {
@@ -13,11 +13,11 @@ export function hashStream(stream: Readable): Promise<IHashes> {
     const result: IHashes = {
       crc: '',
       md5: '',
-      length: 0,
+      size: 0,
     };
 
     function resolveIfComplete() {
-      if (result.md5 && result.crc && result.length) {
+      if (result.md5 && result.crc && result.size) {
         resolve(result);
       }
     }
@@ -39,7 +39,7 @@ export function hashStream(stream: Readable): Promise<IHashes> {
 
     crc32.once('readable', () => {
       result.crc = crc32.toString();
-      result.length = crc32.dataSize();
+      result.size = crc32.dataSize();
       resolveIfComplete();
     });
 
