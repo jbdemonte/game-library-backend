@@ -1,12 +1,11 @@
+import { basename } from 'path';
+import fs from 'fs';
+import yazl from 'yazl';
 import yauzl  from 'yauzl';
 import { hashStream, IHashes } from './hash-stream';
 
 export interface IFileHashes extends IHashes {
   name: string;
-}
-
-export function isZip(path: string): boolean {
-  return Boolean(path.match(/\.zip$/i));
 }
 
 export async function hashZipContent(path: string): Promise<IFileHashes[]> {
@@ -57,5 +56,23 @@ export async function hashZipContent(path: string): Promise<IFileHashes[]> {
       readNext();
     });
 
+  });
+}
+
+export function zipFile(sourceFile: string, targetFile: string): Promise<void> {
+  const zipFile = new yazl.ZipFile();
+
+  const fileName = basename(sourceFile);
+
+  zipFile.addFile(sourceFile, fileName);
+
+  zipFile.end();
+
+  return new Promise((resolve, reject) => {
+    zipFile
+      .outputStream
+      .pipe(fs.createWriteStream(targetFile))
+      .on('close', () => resolve())
+      .on('error', reject);
   });
 }

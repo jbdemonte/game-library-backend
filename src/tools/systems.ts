@@ -13,7 +13,7 @@ function getSystemsFromExtension(extension: string): ISystem[] {
   return (systems as ISystem[]).filter(system => system.extensions.includes(extension));
 }
 
-function getSystemsFromFile(name: string): ISystem[] {
+export function getSystemsFromFile(name: string): ISystem[] {
   const extension = extname(name).substring(1).toLowerCase();
   return getSystemsFromExtension(extension);
 }
