@@ -3,9 +3,9 @@ import * as p7zip from 'p7zip';
 import { basename, extname, join, resolve } from 'path';
 import { FileWatcher } from '../tools/file-watcher';
 import { zipFile } from '../tools/zip';
-import { getHashesFromFile } from './lib/get-hash';
+import { getHashesFromFileContent, hashFile } from './lib/get-hash';
 import { getRomSystemId } from './lib/rom-system';
-import { getFileList, getFileSize, moveFiles, replaceExtension } from '../tools/file';
+import { getFileList, moveFiles, replaceExtension } from '../tools/file';
 import { romModel } from '../models/rom.model';
 import { findRom } from './lib/find-rom';
 import { getTmpFolder } from '../tools/tmp';
@@ -44,7 +44,7 @@ async function onFile(path: string): Promise<void> {
  */
 async function handle7ZipFile(path: string) {
   if (!process.env.TMP_PATH) {
-    throw new Error('tmp path is empty');
+    throw new Error('TMP_PATH is empty');
   }
   const tmpDir = join(resolve(process.env.TMP_PATH), getTmpFolder());
   await mkdir(tmpDir, { recursive: true });
@@ -64,23 +64,22 @@ async function handle7ZipFile(path: string) {
   }
 }
 
-async function handleFile(path: string) {
-  const hashes = await getHashesFromFile(path);
+async function handleFile(path: string): Promise<void> {
+  const hashes = await getHashesFromFileContent(path);
   let rom = await findRom(hashes);
   if (rom) {
     console.log(`already existing, deleting ${basename(path)}`);
-    await unlink(path);
-  } else {
-    const system = getRomSystemId(path, hashes);
-    if (!system) {
-      throw new Error(`System not found for file ${path}`);
-    }
-    console.log(`new rom for ${system} : ${basename(path)}`);
-    rom = new romModel({...hashes, system});
-    rom.path = await saveRomFile(path, process.env.ROMS_PATH || '', system, rom.id);
-    rom.size = await getFileSize(join(process.env.ROMS_PATH || '', rom.path));
-    await rom.save();
+    return await unlink(path);
   }
+  const system = getRomSystemId(path, hashes);
+  if (!system) {
+    throw new Error(`System not found for file ${path}`);
+  }
+  console.log(`new rom for ${system} : ${basename(path)}`);
+  rom = new romModel({ system, files: hashes });
+  const newPath = await saveRomFile(path, process.env.ROMS_PATH || '', system, rom.id);
+  rom.archive = await hashFile(newPath);
+  await rom.save();
 }
 
 async function saveRomFile(source: string, targetPath: string, system: string, id: string): Promise<string> {
@@ -89,14 +88,15 @@ async function saveRomFile(source: string, targetPath: string, system: string, i
   }
   await mkdir(join(targetPath, system, id), { recursive: true });
   let fileName = basename(source);
-  const relativePath = join(system, id);
-  if (extname(source) === '.zip') {
-    await rename(source, join(targetPath, relativePath, fileName));
+  let targetFilePath = join(targetPath, system, id, fileName);
+
+  if (extname(fileName) === '.zip') {
+    await rename(source, targetFilePath);
   } else {
     console.log(`compressing ${fileName}`);
-    fileName = replaceExtension(fileName, 'zip');
-    await zipFile(source, join(targetPath, relativePath, fileName));
+    targetFilePath = replaceExtension(targetFilePath, 'zip');
+    await zipFile(source, targetFilePath);
     await unlink(source);
   }
-  return join(relativePath, fileName);
+  return targetFilePath;
 }

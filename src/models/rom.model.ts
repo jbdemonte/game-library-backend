@@ -19,9 +19,9 @@ const FileSchema = new Schema<FileDocument>(
 );
 
 export interface IRom {
-  path: string;
+  system: string;
+  archive: IFile;
   files: IFile[];
-  size: number;
 }
 
 export interface RomDocument extends IRom, Document {}
@@ -29,11 +29,14 @@ export interface RomDocument extends IRom, Document {}
 export interface RomModel extends Model<RomDocument> {}
 
 const RomSchema = new Schema<RomDocument, RomModel>({
-  path: { type: String, required: true},
+  system: { type: String, required: true },
+  archive: { type: FileSchema, required: true },
   files: { type: [FileSchema], required: true, default: []},
-  size: { type: Number, required: true},
 });
 
+RomSchema.index({ 'system': 1 });
+RomSchema.index({ 'archive.crc': 1 });
+RomSchema.index({ 'archive.md5': 1 });
 RomSchema.index({ 'files.crc': 1 });
 RomSchema.index({ 'files.md5': 1 });
 
