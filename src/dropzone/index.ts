@@ -3,8 +3,7 @@ import * as p7zip from 'p7zip';
 import { basename, extname, join, resolve } from 'path';
 import { FileWatcher } from '../tools/file-watcher';
 import { zipFile } from '../tools/zip';
-import { IFileHash } from './lib/file-hash.interface';
-import { getHashFileFromFile, getHashFileFromZipFile } from './lib/get-hash';
+import { getHashesFromFile } from './lib/get-hash';
 import { getRomSystemId } from './lib/rom-system';
 import { getFileList, getFileSize, moveFiles, replaceExtension } from '../tools/file';
 import { romModel } from '../models/rom.model';
@@ -32,17 +31,10 @@ async function initDropZoneDirectories(dropZonePath: string) {
 }
 
 async function onFile(path: string): Promise<void> {
-  let fileHashes: IFileHash;
-  let extension = extname(path).toLowerCase();
-  if (extension === '.7z') {
+  if (extname(path).toLowerCase() === '.7z') {
     return await handle7ZipFile(path);
   }
-  if (extension === '.zip') {
-    fileHashes = await getHashFileFromZipFile(path);
-  } else {
-    fileHashes = await getHashFileFromFile(path);
-  }
-  await handleFile(fileHashes);
+  await handleFile(path);
 }
 
 /*
@@ -72,19 +64,20 @@ async function handle7ZipFile(path: string) {
   }
 }
 
-async function handleFile(fileHashes: IFileHash) {
-  let rom = await findRom(fileHashes);
+async function handleFile(path: string) {
+  const hashes = await getHashesFromFile(path);
+  let rom = await findRom(hashes);
   if (rom) {
-    console.log(`already existing, deleting ${basename(fileHashes.path)}`);
-    await unlink(fileHashes.path);
+    console.log(`already existing, deleting ${basename(path)}`);
+    await unlink(path);
   } else {
-    const system = getRomSystemId(fileHashes);
+    const system = getRomSystemId(path, hashes);
     if (!system) {
-      throw new Error(`System not found for file ${fileHashes.path}`);
+      throw new Error(`System not found for file ${path}`);
     }
-    console.log(`new rom for ${system} : ${basename(fileHashes.path)}`);
-    rom = new romModel({...fileHashes, system});
-    rom.path = await saveRomFile(fileHashes.path, process.env.ROMS_PATH || '', system, rom.id);
+    console.log(`new rom for ${system} : ${basename(path)}`);
+    rom = new romModel({...hashes, system});
+    rom.path = await saveRomFile(path, process.env.ROMS_PATH || '', system, rom.id);
     rom.size = await getFileSize(join(process.env.ROMS_PATH || '', rom.path));
     await rom.save();
   }
