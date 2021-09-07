@@ -29,3 +29,7 @@ export function getSystemsFromFileFolder(path: string): ISystem | undefined {
   const folder = path.split('/').slice(-2, -1).pop();
   return (systems as ISystem[]).find(system => system.id === folder);
 }
+
+export function getSystemIds(): string[] {
+  return systems.map(system => system.id);
+}

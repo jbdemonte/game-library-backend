@@ -11,12 +11,24 @@ import { romModel } from '../models/rom.model';
 import { findRom } from './lib/find-rom';
 import { getTmpFolder } from '../tools/tmp';
 import { unique } from '../tools/array';
-import { getSystemsFromFile } from '../tools/systems';
+import { getSystemIds, getSystemsFromFile } from '../tools/systems';
 
 
 export async function startDropZoneScan() {
-  const watcher = new FileWatcher(process.env.DROPZONE_PATH || '', onFile);
+  const dropZonePath = process.env.DROPZONE_PATH || '';
+  if (!dropZonePath) {
+    throw new Error('DROPZONE_PATH is empty');
+  }
+  await initDropZoneDirectories(dropZonePath);
+  const watcher = new FileWatcher(dropZonePath, onFile);
   await watcher.start();
+}
+
+async function initDropZoneDirectories(dropZonePath: string) {
+  const systemIds = getSystemIds();
+  for (const systemId of systemIds) {
+    await mkdir(join(dropZonePath, systemId), { recursive: true });
+  }
 }
 
 async function onFile(path: string): Promise<void> {
