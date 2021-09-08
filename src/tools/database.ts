@@ -4,9 +4,15 @@ import mongoose, { Mongoose } from 'mongoose';
 
 let instance: Mongoose | undefined;
 
-async function connect(): Promise<Mongoose> {
+type Config = {
+  host: string;
+  port: string;
+  name: string;
+}
+
+async function connect(config: Config): Promise<Mongoose> {
   if (!instance) {
-    instance = await mongoose.connect(`mongodb://${process.env.MONGODB_HOST}:${process.env.MONGODB_PORT}/${process.env.MONGODB_DB_NAME}`);
+    instance = await mongoose.connect(`mongodb://${config.host}:${config.port}/${config.name}`);
   }
   return instance;
 }

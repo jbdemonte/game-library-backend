@@ -12,29 +12,30 @@ import { getTmpFolder } from '../tools/tmp';
 import { unique } from '../tools/array';
 import { getSystemIds, getSystemsFromFile } from '../tools/systems';
 
+type DropZoneConfig = {
+  dropZone: string;
+  tmp: string;
+  roms: string;
+}
 
-export async function startDropZoneScan() {
-  const dropZonePath = process.env.DROPZONE_PATH || '';
-  if (!dropZonePath) {
-    throw new Error('DROPZONE_PATH is empty');
-  }
-  await initDropZoneDirectories(dropZonePath);
-  const watcher = new FileWatcher(dropZonePath, onFile);
+export async function startDropZoneScan(config: DropZoneConfig) {
+  await initDropZoneDirectories(config);
+  const watcher = new FileWatcher(config.dropZone, onFile.bind(null, config));
   await watcher.start();
 }
 
-async function initDropZoneDirectories(dropZonePath: string) {
+async function initDropZoneDirectories(config: DropZoneConfig) {
   const systemIds = getSystemIds();
   for (const systemId of systemIds) {
-    await mkdir(join(dropZonePath, systemId), { recursive: true });
+    await mkdir(join(config.dropZone, systemId), { recursive: true });
   }
 }
 
-async function onFile(path: string): Promise<void> {
+async function onFile(config: DropZoneConfig, path: string): Promise<void> {
   if (extname(path).toLowerCase() === '.7z') {
-    return await handle7ZipFile(path);
+    return await handle7ZipFile(config, path);
   }
-  await handleFile(path);
+  await handleFile(config, path);
 }
 
 /*
@@ -42,11 +43,8 @@ async function onFile(path: string): Promise<void> {
   in order to get them processed as standalone files (merged 7z which contains multiple rom of the same game, on multiple versions)
   else, throw an error because of the ambiguous system detection
  */
-async function handle7ZipFile(path: string) {
-  if (!process.env.TMP_PATH) {
-    throw new Error('TMP_PATH is empty');
-  }
-  const tmpDir = join(resolve(process.env.TMP_PATH), getTmpFolder());
+async function handle7ZipFile(config: DropZoneConfig, path: string) {
+  const tmpDir = join(resolve(config.tmp), getTmpFolder());
   await mkdir(tmpDir, { recursive: true });
   await p7zip.extract(path, tmpDir);
   const files = await getFileList(tmpDir);
@@ -55,7 +53,7 @@ async function handle7ZipFile(path: string) {
     return systems.length > 1 ? '' : systems[0]?.id || ''; // keep only one system
   }));
   if (systemIds.length === 1 && systemIds[0] !== '') {
-    await moveFiles(files, process.env.DROPZONE_PATH || '');
+    await moveFiles(files, config.dropZone);
     await rmdir(tmpDir);
     await unlink(path);
   } else {
@@ -64,7 +62,7 @@ async function handle7ZipFile(path: string) {
   }
 }
 
-async function handleFile(path: string): Promise<void> {
+async function handleFile(config: DropZoneConfig, path: string): Promise<void> {
   const hashes = await getHashesFromFileContent(path);
   let rom = await findRom(hashes);
   if (rom) {
@@ -77,7 +75,7 @@ async function handleFile(path: string): Promise<void> {
   }
   console.log(`new rom for ${system} : ${basename(path)}`);
   rom = new romModel({ system, files: hashes });
-  const newPath = await saveRomFile(path, process.env.ROMS_PATH || '', system, rom.id);
+  const newPath = await saveRomFile(path, config.roms, system, rom.id);
   rom.archive = await hashFile(newPath);
   await rom.save();
 }
