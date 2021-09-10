@@ -23,6 +23,7 @@ export interface IRom {
   system: string;
   archive: IFile;
   files: IFile[];
+  lastScrap: Date | null;
 }
 
 export interface RomDocument extends IRom, Document {}
@@ -34,12 +35,14 @@ const RomSchema = new Schema<RomDocument, RomModel>({
   system: { type: String, required: true },
   archive: { type: FileSchema, required: true },
   files: { type: [FileSchema], required: true, default: []},
+  lastScrap: { type: Date, default: null },
 });
 
-RomSchema.index({ 'system': 1 });
+RomSchema.index({ system: 1 });
 RomSchema.index({ 'archive.crc': 1 });
 RomSchema.index({ 'archive.md5': 1 });
 RomSchema.index({ 'files.crc': 1 });
 RomSchema.index({ 'files.md5': 1 });
+RomSchema.index({ game: 1, lastScrap: -1 });
 
 export const romModel = model<RomDocument, RomModel>('Rom', RomSchema);

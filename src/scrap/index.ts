@@ -8,6 +8,7 @@ type Config = {
 
 const DURATION_BETWEEN_TWO_SCRAPS = 2;
 const SLEEP_TIME_ON_IDLE = 60;
+const SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP = 86400;
 
 export async function startScrapDaemon(config: Config) {
   const dataPath = await getNoIntroDataPath(config.noIntroParentPath);
@@ -22,7 +23,7 @@ export async function startScrapDaemon(config: Config) {
 
 async function proceed() {
   try {
-    const saved = await scrapNextFile();
+    const saved = await scrapNextFile(SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP);
     if (saved) {
       setTimeout(proceed, 1000 * DURATION_BETWEEN_TWO_SCRAPS);
     } else {
