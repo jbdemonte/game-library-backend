@@ -6,3 +6,5 @@ dist
 /dropzone
 /docker
 /roms
+/data/*
+!/data/README.md

@@ -1,5 +1,7 @@
 import { extname } from 'path';
-import systems from '../data/systems.json';
+import rawSystems from '../data/systems.json';
+
+const systems = (rawSystems as ISystem[]);
 
 export interface ISystem {
   id: string;
@@ -7,10 +9,11 @@ export interface ISystem {
   type: 'arcade' | 'computer' | 'console' | 'handheld' | 'arcade-emulation' | 'console-arcade' | 'misc';
   extensions: string[];
   screenscraper: number;
+  'no-intro'?: string;
 }
 
 function getSystemsFromExtension(extension: string): ISystem[] {
-  return (systems as ISystem[]).filter(system => system.extensions.includes(extension));
+  return systems.filter(system => system.extensions.includes(extension));
 }
 
 export function getSystemsFromFile(name: string): ISystem[] {
@@ -27,9 +30,17 @@ export function getSystemsFromFiles(names: string[]): ISystem[] {
 
 export function getSystemsFromFileFolder(path: string): ISystem | undefined {
   const folder = path.split('/').slice(-2, -1).pop();
-  return (systems as ISystem[]).find(system => system.id === folder);
+  return systems.find(system => system.id === folder);
 }
 
 export function getSystemIds(): string[] {
   return systems.map(system => system.id);
+}
+
+export function getSystem(id: string): ISystem {
+  const system = systems.find(system => system.id === id);
+  if (!system) {
+    throw new Error(`System not found for id ${id}`);
+  }
+  return system;
 }

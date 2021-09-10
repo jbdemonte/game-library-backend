@@ -1,4 +1,4 @@
-import { Document, model, Model, Schema } from 'mongoose';
+import { Document, model, Model, Schema, Types } from 'mongoose';
 
 export interface IFile {
   name: string;
@@ -19,6 +19,7 @@ const FileSchema = new Schema<FileDocument>(
 );
 
 export interface IRom {
+  game: Types.ObjectId | null;
   system: string;
   archive: IFile;
   files: IFile[];
@@ -29,6 +30,7 @@ export interface RomDocument extends IRom, Document {}
 export interface RomModel extends Model<RomDocument> {}
 
 const RomSchema = new Schema<RomDocument, RomModel>({
+  game: { type: Schema.Types.ObjectId, ref: "Game", default: null },
   system: { type: String, required: true },
   archive: { type: FileSchema, required: true },
   files: { type: [FileSchema], required: true, default: []},

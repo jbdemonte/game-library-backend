@@ -18,35 +18,40 @@
     "name": "Atari 2600",
     "type": "console",
     "extensions": ["a26", "bin", "zip"],
-    "screenscraper": 26
+    "screenscraper": 26,
+    "no-intro": "Atari - 2600"
   },
   {
     "id": "atari5200",
     "name": "Atari 5200",
     "type": "console",
     "extensions": ["a52", "atr", "bas", "bin", "car", "cdm", "xex", "xfd", "zip"],
-    "screenscraper": 40
+    "screenscraper": 40,
+    "no-intro": "Atari - 5200"
   },
   {
     "id": "atari7800",
     "name": "Atari 7800",
     "type": "console",
     "extensions": ["a78", "bin", "zip"],
-    "screenscraper": 41
+    "screenscraper": 41,
+    "no-intro": "Atari - 7800"
   },
   {
     "id": "atarist",
     "name": "Atari ST",
     "type": "computer",
     "extensions": [".st", "ipf", "stx", "zip"],
-    "screenscraper": 42
+    "screenscraper": 42,
+    "no-intro": "Atari - ST"
   },
   {
     "id": "c64",
     "name": "Commodore 64",
     "type": "computer",
     "extensions": ["crt", "d64", "d71", "d80", "d81", "d82", "g41", "g64", "p00", "prg", "t64", "tap", "x64", "zip"],
-    "screenscraper": 66
+    "screenscraper": 66,
+    "no-intro": "Commodore - 64"
   },
   {
     "id": "capcom",
@@ -67,7 +72,8 @@
     "name": "Colecovision",
     "type": "console",
     "extensions": ["col", "zip"],
-    "screenscraper": 48
+    "screenscraper": 48,
+    "no-intro": "Coleco - ColecoVision"
   },
   {
     "id": "cpc",
@@ -123,7 +129,8 @@
     "name": "Family Computer Disk System",
     "type": "console",
     "extensions": ["fds", "zip"],
-    "screenscraper": 106
+    "screenscraper": 106,
+    "no-intro": "Nintendo - Family Computer Disk System"
   },
   {
     "id": "gamecube",
@@ -137,28 +144,32 @@
     "name": "Game Gear",
     "type": "handheld",
     "extensions": ["gg", "zip"],
-    "screenscraper": 21
+    "screenscraper": 21,
+    "no-intro": "Sega - Game Gear"
   },
   {
     "id": "gb",
     "name": "Game Boy",
     "type": "handheld",
     "extensions": ["gb", "zip"],
-    "screenscraper": 9
+    "screenscraper": 9,
+    "no-intro": "Nintendo - Game Boy ("
   },
   {
     "id": "gba",
     "name": "Game Boy Advance",
     "type": "handheld",
     "extensions": ["gba", "zip"],
-    "screenscraper": 12
+    "screenscraper": 12,
+    "no-intro": "Nintendo - Game Boy Advance"
   },
   {
     "id": "gbc",
     "name": "Game Boy Color",
     "type": "handheld",
     "extensions": ["gb", "gbc", "zip"],
-    "screenscraper": 10
+    "screenscraper": 10,
+    "no-intro": "Nintendo - Game Boy Color"
   },
   {
     "id": "gw",
@@ -186,7 +197,8 @@
     "name": "Lynx",
     "type": "handheld",
     "extensions": ["lnx", "zip"],
-    "screenscraper": 28
+    "screenscraper": 28,
+    "no-intro": "Atari - Lynx"
   },
   {
     "id": "mame",
@@ -200,28 +212,32 @@
     "name": "Megadrive",
     "type": "console",
     "extensions": ["bin", "gen", "md", "smd", "zip"],
-    "screenscraper": 1
+    "screenscraper": 1,
+    "no-intro": "Sega - Mega Drive - Genesis"
   },
   {
     "id": "msx1",
     "name": "MSX",
     "type": "computer",
     "extensions": ["dsk", "mx1", "rom", "zip"],
-    "screenscraper": 113
+    "screenscraper": 113,
+    "no-intro": "Microsoft - MSX ("
   },
   {
     "id": "msx2",
     "name": "MSX2",
     "type": "computer",
     "extensions": ["dsk", "mx2", "rom", "zip"],
-    "screenscraper": 116
+    "screenscraper": 116,
+    "no-intro": "Microsoft - MSX2"
   },
   {
     "id": "n64",
     "name": "Nintendo 64",
     "type": "console",
     "extensions": ["n64", "v64", "z64"],
-    "screenscraper": 14
+    "screenscraper": 14,
+    "no-intro": "Nintendo - Nintendo 64"
   },
   {
     "id": "neogeo",
@@ -235,21 +251,24 @@
     "name": "NES",
     "type": "console",
     "extensions": ["nes", "zip"],
-    "screenscraper": 3
+    "screenscraper": 3,
+    "no-intro": "Nintendo - Nintendo Entertainment System"
   },
   {
     "id": "ngp",
     "name": "Neo-Geo Pocket",
     "type": "handheld",
     "extensions": ["ngc", "ngp", "zip"],
-    "screenscraper": 25
+    "screenscraper": 25,
+    "no-intro": "SNK - Neo Geo Pocket ("
   },
   {
     "id": "ngpc",
     "name": "Neo-Geo Pocket Color",
     "type": "handheld",
     "extensions": ["ngc", "ngp", "zip"],
-    "screenscraper": 82
+    "screenscraper": 82,
+    "no-intro": "SNK - Neo Geo Pocket Color"
   },
   {
     "id": "o2em",
@@ -263,7 +282,8 @@
     "name": "PC Engine",
     "type": "console",
     "extensions": ["ccd", "cue", "pce", "sgx", "zip"],
-    "screenscraper": 31
+    "screenscraper": 31,
+    "no-intro": "NEC - PC Engine - TurboGrafx 16"
   },
   {
     "id": "pcecd",
@@ -319,7 +339,8 @@
     "name": "Megadrive 32X",
     "type": "console",
     "extensions": ["32x", "bin", "smd", "zip"],
-    "screenscraper": 19
+    "screenscraper": 19,
+    "no-intro": "Sega - 32X"
   },
   {
     "id": "segacd",
@@ -333,28 +354,32 @@
     "name": "SG-1000",
     "type": "console",
     "extensions": ["sg", "zip"],
-    "screenscraper": 109
+    "screenscraper": 109,
+    "no-intro": "Sega - SG-1000"
   },
   {
     "id": "sms",
     "name": "Master System",
     "type": "console",
     "extensions": ["sms", "zip"],
-    "screenscraper": 2
+    "screenscraper": 2,
+    "no-intro": "Sega - Master System - Mark III"
   },
   {
     "id": "snes",
     "name": "Super Nintendo",
     "type": "console",
     "extensions": ["mgd", "sfc", "smc", "zip"],
-    "screenscraper": 4
+    "screenscraper": 4,
+    "no-intro": "Nintendo - Super Nintendo Entertainment System"
   },
   {
     "id": "supergrafx",
     "name": "PC Engine SuperGrafx",
     "type": "console",
     "extensions": ["pce", "sgx", "zip"],
-    "screenscraper": 105
+    "screenscraper": 105,
+    "no-intro": "NEC - PC Engine SuperGrafx"
   },
   {
     "id": "taito",
@@ -375,14 +400,16 @@
     "name": "Vectrex",
     "type": "console",
     "extensions": ["vec", "zip"],
-    "screenscraper": 102
+    "screenscraper": 102,
+    "no-intro": "GCE - Vectrex"
   },
   {
     "id": "virtualboy",
     "name": "Virtual Boy",
     "type": "handheld",
     "extensions": ["vb", "zip"],
-    "screenscraper": 11
+    "screenscraper": 11,
+    "no-intro": "Nintendo - Virtual Boy"
   },
   {
     "id": "wii",
@@ -396,14 +423,16 @@
     "name": "WonderSwan",
     "type": "handheld",
     "extensions": ["ws", "wsc", "zip"],
-    "screenscraper": 45
+    "screenscraper": 45,
+    "no-intro": "Bandai - WonderSwan ("
   },
   {
     "id": "wswanc",
     "name": "WonderSwan Color",
     "type": "handheld",
     "extensions": ["ws", "wsc", "zip"],
-    "screenscraper": 46
+    "screenscraper": 46,
+    "no-intro": "Bandai - WonderSwan Color"
   },
   {
     "id": "zx81",
@@ -417,6 +446,7 @@
     "name": "ZX Spectrum",
     "type": "computer",
     "extensions": ["rzx", "scl", "tap", "trd", "tzx", "z80", "zip"],
-    "screenscraper": 76
+    "screenscraper": 76,
+    "no-intro": "Sinclair - ZX Spectrum"
   }
 ]
