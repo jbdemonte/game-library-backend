@@ -1,4 +1,4 @@
-import { Readable, PassThrough } from 'stream';
+import { Readable, PassThrough, Transform } from 'stream';
 import crypto from 'crypto';
 import { CRC32Stream } from './crc32';
 
@@ -6,9 +6,14 @@ export interface IHashes {
   crc: string;
   md5: string;
   size: number;
+  unheadered?: {
+    crc: string;
+    md5: string;
+    size: number;
+  };
 }
 
-export function hashStream(stream: Readable): Promise<IHashes> {
+export function hashStream<T extends Transform>(stream: Readable, headerRemover?: T | undefined): Promise<IHashes> {
   return new Promise((resolve) => {
     const result: IHashes = {
       crc: '',
@@ -17,7 +22,7 @@ export function hashStream(stream: Readable): Promise<IHashes> {
     };
 
     function resolveIfComplete() {
-      if (result.md5 && result.crc && result.size) {
+      if (result.md5 && result.crc && result.size && (!headerRemover || result.unheadered)) {
         resolve(result);
       }
     }
@@ -45,5 +50,21 @@ export function hashStream(stream: Readable): Promise<IHashes> {
 
     copyStream1.pipe(md5Hash);
     copyStream2.pipe(crc32);
+
+    if (headerRemover) {
+      stream.pipe(headerRemover);
+      hashStream(headerRemover)
+        .then(hash => {
+          result.unheadered = {
+            crc: hash.crc,
+            md5: hash.md5,
+            size: hash.size,
+          }
+          resolveIfComplete();
+        })
+        .catch(err => {
+          throw err;
+        });
+    }
   });
 }

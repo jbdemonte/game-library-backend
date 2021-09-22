@@ -1,10 +1,28 @@
 import { Document, model, Model, Schema, Types } from 'mongoose';
 
+export interface IUnheadered {
+  crc: string;
+  md5: string;
+  size: number;
+}
+
+export interface UnheaderedDocument extends IUnheadered, Document {}
+
+const UnheaderedSchema = new Schema<UnheaderedDocument>(
+  {
+    crc: { type: String, required: true},
+    md5: { type: String, required: true},
+    size: { type: Number, required: true},
+  },
+  { _id : false },
+);
+
 export interface IFile {
   name: string;
   crc: string;
   md5: string;
   size: number;
+  unheadered?: IUnheadered;
 }
 export interface FileDocument extends IFile, Document {}
 
@@ -14,6 +32,7 @@ const FileSchema = new Schema<FileDocument>(
     crc: { type: String, required: true},
     md5: { type: String, required: true},
     size: { type: Number, required: true},
+    unheadered: { type: UnheaderedSchema },
   },
   { _id : false },
 );

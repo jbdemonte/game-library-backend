@@ -3,6 +3,7 @@ import fs from 'fs';
 import yazl from 'yazl';
 import yauzl  from 'yauzl';
 import { hashStream, IHashes } from './hash-stream';
+import { getHeaderRemoverTransform } from '../headers/get-header-remover-transform';
 
 export interface IFileHashes extends IHashes {
   name: string;
@@ -40,7 +41,7 @@ export async function hashZipContent(path: string): Promise<IFileHashes[]> {
             readStream.on('end', readNext);
             files.push({
               name: entry.fileName,
-              ...await hashStream(readStream)
+              ...await hashStream(readStream, getHeaderRemoverTransform(entry.fileName)),
             });
             hashing = false;
             syncEnd();
