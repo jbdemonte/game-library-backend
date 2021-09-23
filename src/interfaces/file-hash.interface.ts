@@ -3,4 +3,9 @@ export interface IFileHash {
   crc: string;
   md5: string;
   size: number;
+  unheadered?: {
+    crc: string;
+    md5: string;
+    size: number;
+  };
 }

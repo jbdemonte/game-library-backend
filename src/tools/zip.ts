@@ -2,16 +2,14 @@ import { basename } from 'path';
 import fs from 'fs';
 import yazl from 'yazl';
 import yauzl  from 'yauzl';
-import { hashStream, IHashes } from './hash-stream';
+import { hashStream } from './hash-stream';
 import { getHeaderRemoverTransform } from '../headers/get-header-remover-transform';
+import { IFileHash } from '../interfaces/file-hash.interface';
 
-export interface IFileHashes extends IHashes {
-  name: string;
-}
 
-export async function hashZipContent(path: string): Promise<IFileHashes[]> {
+export async function hashZipContent(path: string): Promise<IFileHash[]> {
   return new Promise((resolve, reject) => {
-    const files: IFileHashes[] = [];
+    const files: IFileHash[] = [];
     let hashing = false;
     let ended = false;
 

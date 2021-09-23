@@ -1,4 +1,4 @@
-import { IFileHash } from './file-hash.interface';
+import { IFileHash } from '../../interfaces/file-hash.interface';
 import { RomDocument, romModel } from '../../models/rom.model';
 
 function hasMD5(target: Array<{ md5: string}>, md5: string): boolean {

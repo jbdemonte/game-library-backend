@@ -1,17 +1,9 @@
 import { Readable, PassThrough, Transform } from 'stream';
 import crypto from 'crypto';
 import { CRC32Stream } from './crc32';
+import { IFileHash } from '../interfaces/file-hash.interface';
 
-export interface IHashes {
-  crc: string;
-  md5: string;
-  size: number;
-  unheadered?: {
-    crc: string;
-    md5: string;
-    size: number;
-  };
-}
+type IHashes = Omit<IFileHash, 'name'>;
 
 export function hashStream<T extends Transform>(stream: Readable, headerRemover?: T | undefined): Promise<IHashes> {
   return new Promise((resolve) => {

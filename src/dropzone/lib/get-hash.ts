@@ -2,7 +2,7 @@ import { createReadStream } from 'fs';
 import { basename, extname } from 'path';
 import { hashStream } from '../../tools/hash-stream';
 import { hashZipContent } from '../../tools/zip';
-import { IFileHash } from './file-hash.interface';
+import { IFileHash } from '../../interfaces/file-hash.interface';
 import { getHeaderRemoverTransform } from '../../headers/get-header-remover-transform';
 
 export async function getHashesFromFileContent(path: string): Promise<IFileHash[]> {

@@ -1,4 +1,4 @@
-import { IFileHash } from './file-hash.interface';
+import { IFileHash } from '../../interfaces/file-hash.interface';
 import { getSystemsFromFileFolder, getSystemsFromFiles } from '../../tools/systems';
 
 export function getRomSystemId(path: string, hashes: IFileHash[]): string {
