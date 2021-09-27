@@ -3,7 +3,7 @@ export interface IFileHash {
   crc: string;
   md5: string;
   size: number;
-  unheadered?: {
+  generic?: {
     crc: string;
     md5: string;
     size: number;

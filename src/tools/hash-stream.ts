@@ -14,7 +14,7 @@ export function hashStream<T extends Transform>(stream: Readable, headerRemover?
     };
 
     function resolveIfComplete() {
-      if (result.md5 && result.crc && result.size && (!headerRemover || result.unheadered)) {
+      if (result.md5 && result.crc && result.size && (!headerRemover || result.generic)) {
         resolve(result);
       }
     }
@@ -47,7 +47,7 @@ export function hashStream<T extends Transform>(stream: Readable, headerRemover?
       stream.pipe(headerRemover);
       hashStream(headerRemover)
         .then(hash => {
-          result.unheadered = {
+          result.generic = {
             crc: hash.crc,
             md5: hash.md5,
             size: hash.size,

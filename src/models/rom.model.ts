@@ -1,14 +1,14 @@
 import { Document, model, Model, Schema, Types } from 'mongoose';
 
-export interface IUnheadered {
+export interface IGeneric {
   crc: string;
   md5: string;
   size: number;
 }
 
-export interface UnheaderedDocument extends IUnheadered, Document {}
+export interface GenericDocument extends IGeneric, Document {}
 
-const UnheaderedSchema = new Schema<UnheaderedDocument>(
+const GenericSchema = new Schema<GenericDocument>(
   {
     crc: { type: String, required: true},
     md5: { type: String, required: true},
@@ -22,7 +22,7 @@ export interface IFile {
   crc: string;
   md5: string;
   size: number;
-  unheadered?: IUnheadered;
+  generic?: IGeneric;
 }
 export interface FileDocument extends IFile, Document {}
 
@@ -32,7 +32,7 @@ const FileSchema = new Schema<FileDocument>(
     crc: { type: String, required: true},
     md5: { type: String, required: true},
     size: { type: Number, required: true},
-    unheadered: { type: UnheaderedSchema },
+    generic: { type: GenericSchema },
   },
   { _id : false },
 );
@@ -62,8 +62,8 @@ RomSchema.index({ 'archive.crc': 1 });
 RomSchema.index({ 'archive.md5': 1 });
 RomSchema.index({ 'files.crc': 1 });
 RomSchema.index({ 'files.md5': 1 });
-RomSchema.index({ 'files.unheadered.crc': 1 });
-RomSchema.index({ 'files.unheadered.md5': 1 });
+RomSchema.index({ 'files.generic.crc': 1 });
+RomSchema.index({ 'files.generic.md5': 1 });
 RomSchema.index({ game: 1, lastScrap: -1 });
 
 export const romModel = model<RomDocument, RomModel>('Rom', RomSchema);
