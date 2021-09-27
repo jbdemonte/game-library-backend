@@ -17,7 +17,11 @@ export async function scrapNextFile(durationBeforeRetryingAFailedScrap: number):
 
   rom.lastScrap = new Date();
 
-  const noIntroGame = await noIntroDB.find(rom.system, rom.files[0].md5);
+  let noIntroGame = await noIntroDB.find(rom.system, rom.files[0].md5);
+
+  if (!noIntroGame && rom.files[0].generic?.md5) {
+    noIntroGame = await noIntroDB.find(rom.system, rom.files[0].generic.md5);
+  }
 
   if (noIntroGame) {
     let game = await getGameFromClones(rom.system, noIntroGame);
