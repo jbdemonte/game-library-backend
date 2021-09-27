@@ -1,7 +1,7 @@
 // https://wiki.nesdev.com/w/index.php/NES_2.0
 import { Transform, TransformCallback } from 'stream';
 
-export class NesHeaderRemover extends Transform {
+export class NesTransformer extends Transform {
   private firstChunk = true;
 
   _transform(chunk: any, encoding: BufferEncoding, callback: TransformCallback) {

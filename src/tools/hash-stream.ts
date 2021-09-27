@@ -5,7 +5,7 @@ import { IFileHash } from '../interfaces/file-hash.interface';
 
 type IHashes = Omit<IFileHash, 'name'>;
 
-export function hashStream<T extends Transform>(stream: Readable, headerRemover?: T | undefined): Promise<IHashes> {
+export function hashStream<T extends Transform>(stream: Readable, genericTransformer?: T | undefined): Promise<IHashes> {
   return new Promise((resolve) => {
     const result: IHashes = {
       crc: '',
@@ -14,7 +14,7 @@ export function hashStream<T extends Transform>(stream: Readable, headerRemover?
     };
 
     function resolveIfComplete() {
-      if (result.md5 && result.crc && result.size && (!headerRemover || result.generic)) {
+      if (result.md5 && result.crc && result.size && (!genericTransformer || result.generic)) {
         resolve(result);
       }
     }
@@ -43,9 +43,9 @@ export function hashStream<T extends Transform>(stream: Readable, headerRemover?
     copyStream1.pipe(md5Hash);
     copyStream2.pipe(crc32);
 
-    if (headerRemover) {
-      stream.pipe(headerRemover);
-      hashStream(headerRemover)
+    if (genericTransformer) {
+      stream.pipe(genericTransformer);
+      hashStream(genericTransformer)
         .then(hash => {
           result.generic = {
             crc: hash.crc,

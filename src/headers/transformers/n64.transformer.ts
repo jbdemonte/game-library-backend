@@ -23,7 +23,7 @@ function swapWords(buffer: Buffer) {
   }
 }
 
-export class N64HeaderRemover extends Transform {
+export class N64Transformer extends Transform {
   private firstChunk = true;
   private byteSwapped = false;
   private wordSwapped = false;

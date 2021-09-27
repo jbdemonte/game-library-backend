@@ -3,7 +3,7 @@ import fs from 'fs';
 import yazl from 'yazl';
 import yauzl  from 'yauzl';
 import { hashStream } from './hash-stream';
-import { getHeaderRemoverTransform } from '../headers/get-header-remover-transform';
+import { getGenericTransformer } from '../headers/get-generic-transformer';
 import { IFileHash } from '../interfaces/file-hash.interface';
 
 
@@ -39,7 +39,7 @@ export async function hashZipContent(path: string): Promise<IFileHash[]> {
             readStream.on('end', readNext);
             files.push({
               name: entry.fileName,
-              ...await hashStream(readStream, getHeaderRemoverTransform(entry.fileName)),
+              ...await hashStream(readStream, getGenericTransformer(entry.fileName)),
             });
             hashing = false;
             syncEnd();
