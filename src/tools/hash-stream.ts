@@ -15,6 +15,9 @@ export function hashStream<T extends Transform>(stream: Readable, genericTransfo
 
     function resolveIfComplete() {
       if (result.md5 && result.crc && result.size && (!genericTransformer || result.generic)) {
+        if (result.generic && result.generic.md5 === result.md5) {
+          delete result.generic; // no need to keep the same information, the transformer didn't changed anything
+        }
         resolve(result);
       }
     }
