@@ -8,3 +8,4 @@ dist
 /roms
 /data/*
 !/data/README.md
+screenscraper-credentials.json

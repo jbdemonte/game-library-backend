@@ -3,6 +3,11 @@ import { Document, model, Model, Schema } from 'mongoose';
 export interface IGame {
   system: string;
   name: string;
+  genres?: string[],
+  synopsis?: string;
+  grade?: number;
+  players?: number;
+  raw?: any;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -15,6 +20,11 @@ const GameSchema = new Schema<GameDocument, GameModel>(
   {
     system: { type: String, required: true },
     name: { type: String, required: true },
+    genres: { type: [String] },
+    synopsis: { type: String },
+    grade: { type: Number },
+    players: { type: Number },
+    raw: { type: Schema.Types.Mixed },
   },
   { timestamps: true }
 );

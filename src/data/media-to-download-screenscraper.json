@@ -1,0 +1,39 @@
+{
+  "bezel-16-9": false,
+  "bezel-16-9-cocktail": false,
+  "bezel-16-9-v": false,
+  "bezel-4-3-cocktail": false,
+  "bezel-4-3": false,
+  "bezel-4-3-v": false,
+
+  "box-2D": true,
+  "box-2D-side": false,
+  "box-2D-back": false,
+  "box-texture": false,
+  "box-3D": true,
+
+  "video": true,
+  "video-normalized": true,
+
+  "mixrbv1": false,
+  "mixrbv2": false,
+
+  "sstitle": true,
+  "ss": true,
+
+  "marquee": false,
+  "screenmarquee": false,
+  "screenmarqueesmall": false,
+
+  "overlay": false,
+
+  "box-scan": false,
+  "support-scan": false,
+  "support-2D": false,
+  "support-texture": false,
+
+  "wheel": false,
+  "wheel-hd": false,
+  "wheel-steel": false,
+  "wheel-carbon": false
+}

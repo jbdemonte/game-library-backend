@@ -18,7 +18,7 @@ export async function startScrapDaemon() {
 
 async function proceed() {
   try {
-    const saved = await scrapNextFile(config.durationBeforeRetryingAFailedScrap);
+    const saved = await scrapNextFile();
     if (saved) {
       setTimeout(proceed, config.durationBetweenTwoScraps);
     } else {

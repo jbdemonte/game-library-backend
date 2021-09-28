@@ -36,3 +36,9 @@ export const getScrapConfig = () => ({
   durationBetweenTwoScraps: 1000  * (parseInt(process.env.SLEEP_TIME_BETWEEN_TWO_SCRAPS || '') || 10),
   durationBeforeRetryingAFailedScrap: 1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP || '') || 24 * 3600),
 });
+
+export const getScreenscraperCredentials = () => ({
+  softname: process.env.SCREENSCRAPER_SOFTNAME ?? '',
+  devid: process.env.SCREENSCRAPER_DEVID ?? '',
+  devpassword: process.env.SCREENSCRAPER_DEVPASSWORD ?? '',
+});
