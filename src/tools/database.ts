@@ -1,16 +1,16 @@
 import mongoose, { Mongoose } from 'mongoose';
+import { getDatabaseConfig } from '../config';
 
-// mongoose.set('debug', true);
+const config = getDatabaseConfig();
+
+if (config.debug) {
+  mongoose.set('debug', true);
+}
 
 let instance: Mongoose | undefined;
 
-type Config = {
-  host: string;
-  port: string;
-  name: string;
-}
 
-async function connect(config: Config): Promise<Mongoose> {
+async function connect(): Promise<Mongoose> {
   if (!instance) {
     instance = await mongoose.connect(`mongodb://${config.host}:${config.port}/${config.name}`);
   }

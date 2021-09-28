@@ -1,16 +1,11 @@
 import { noIntroDB } from '../no-intro';
 import { getNoIntroDataPath } from './lib/no-intro-folder';
 import { scrapNextFile } from './lib/scrap.service';
+import { getScrapConfig } from '../config';
 
-type Config = {
-  noIntroParentPath: string;
-}
+const config = getScrapConfig();
 
-const DURATION_BETWEEN_TWO_SCRAPS = 2;
-const SLEEP_TIME_ON_IDLE = 60;
-const SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP = 86400;
-
-export async function startScrapDaemon(config: Config) {
+export async function startScrapDaemon() {
   const dataPath = await getNoIntroDataPath(config.noIntroParentPath);
   if (!dataPath) {
     throw new Error('No-Intro PC XML folder not found');
@@ -23,11 +18,11 @@ export async function startScrapDaemon(config: Config) {
 
 async function proceed() {
   try {
-    const saved = await scrapNextFile(SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP);
+    const saved = await scrapNextFile(config.durationBeforeRetryingAFailedScrap);
     if (saved) {
-      setTimeout(proceed, 1000 * DURATION_BETWEEN_TWO_SCRAPS);
+      setTimeout(proceed, config.durationBetweenTwoScraps);
     } else {
-      setTimeout(proceed, 1000 * SLEEP_TIME_ON_IDLE);
+      setTimeout(proceed, config.sleepTimeOnIdle);
     }
   } catch (err) {
     console.log(err);

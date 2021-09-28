@@ -11,31 +11,28 @@ import { findRom } from './lib/find-rom';
 import { getTmpFolder } from '../tools/tmp';
 import { unique } from '../tools/array';
 import { getSystemIds, getSystemsFromFile } from '../tools/systems';
+import { getDropzoneConfig } from '../config';
 
-type DropZoneConfig = {
-  dropZone: string;
-  tmp: string;
-  roms: string;
-}
+const config = getDropzoneConfig();
 
-export async function startDropZoneScan(config: DropZoneConfig) {
-  await initDropZoneDirectories(config);
-  const watcher = new FileWatcher(config.dropZone, onFile.bind(null, config));
+export async function startDropZoneScan() {
+  await initDropZoneDirectories();
+  const watcher = new FileWatcher(config.dropZone, onFile);
   await watcher.start();
 }
 
-async function initDropZoneDirectories(config: DropZoneConfig) {
+async function initDropZoneDirectories() {
   const systemIds = getSystemIds();
   for (const systemId of systemIds) {
     await mkdir(join(config.dropZone, systemId), { recursive: true });
   }
 }
 
-async function onFile(config: DropZoneConfig, path: string): Promise<void> {
+async function onFile(path: string): Promise<void> {
   if (extname(path).toLowerCase() === '.7z') {
-    return await handle7ZipFile(config, path);
+    return await handle7ZipFile(path);
   }
-  await handleFile(config, path);
+  await handleFile(path);
 }
 
 /*
@@ -43,7 +40,7 @@ async function onFile(config: DropZoneConfig, path: string): Promise<void> {
   in order to get them processed as standalone files (merged 7z which contains multiple rom of the same game, on multiple versions)
   else, throw an error because of the ambiguous system detection
  */
-async function handle7ZipFile(config: DropZoneConfig, path: string) {
+async function handle7ZipFile(path: string) {
   const tmpDir = join(resolve(config.tmp), getTmpFolder());
   await mkdir(tmpDir, { recursive: true });
   await p7zip.extract(path, tmpDir);
@@ -62,7 +59,7 @@ async function handle7ZipFile(config: DropZoneConfig, path: string) {
   }
 }
 
-async function handleFile(config: DropZoneConfig, path: string): Promise<void> {
+async function handleFile(path: string): Promise<void> {
   const hashes = await getHashesFromFileContent(path);
   let rom = await findRom(hashes);
   if (rom) {
