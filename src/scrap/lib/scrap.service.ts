@@ -104,11 +104,17 @@ async function getGameFromScreenscraper(rom: RomDocument, game: GameDocument | n
       await sleep(config.durationBetweenTwoScraps);
     }
     const data = await getGameData({ system: system.screenscraper, name: tuples[i].name, md5: tuples[i].md5 });
+
     if (data) {
+      const previousGame = await gameModel.findOne({ screenscraperId: data.id });
+      if (previousGame) {
+        game = previousGame;
+      }
       if (!game) {
         game = new gameModel({ system: rom.system });
       }
       game.name = data.name;
+      game.screenscraperId = data.id;
       game.genres = data.genres;
       game.synopsis = data.synopsis;
       game.grade = data.grade;

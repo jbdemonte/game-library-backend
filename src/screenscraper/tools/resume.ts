@@ -20,7 +20,8 @@ export function getRomFoundResume(rom: I_SS_RomFound) {
 }
 
 export interface GameResume {
-  id: string;
+  id: number;
+  cloneof: number;
   name: string;
   synopsis: string;
   date: string;
@@ -45,7 +46,8 @@ export function getGameResume(raw: I_SS_Game): GameResume {
     medias: raw.medias.map(media => ({...media, url: removeCredentials(fixMediaPart(media.url))}))
   }
   return {
-    id: game.id,
+    id: parseInt(game.id),
+    cloneof: parseInt(game.cloneof) || 0,
     name: getTextByLng(game.noms),
     synopsis: decode(getTextByLng(game.synopsis)),
     date: getTextByLng(game.dates),

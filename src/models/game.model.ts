@@ -22,6 +22,7 @@ const MediaSchema = new Schema<MediaDocument>(
 export interface IGame {
   system: string;
   name: string;
+  screenscraperId?: number;
   genres?: string[],
   synopsis?: string;
   grade?: number;
@@ -39,6 +40,7 @@ const GameSchema = new Schema<GameDocument, GameModel>(
   {
     system: { type: String, required: true },
     name: { type: String, required: true },
+    screenscraperId: { type: Number },
     genres: { type: [String] },
     synopsis: { type: String },
     grade: { type: Number },
@@ -48,5 +50,6 @@ const GameSchema = new Schema<GameDocument, GameModel>(
   { timestamps: true }
 );
 
+GameSchema.index({ screenscraperId: 1 });
 
 export const gameModel = model<GameDocument, GameModel>('Game', GameSchema);
