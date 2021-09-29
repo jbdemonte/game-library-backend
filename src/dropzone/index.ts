@@ -1,11 +1,11 @@
 import { mkdir, rmdir, rename, unlink } from 'fs/promises';
 import * as p7zip from 'p7zip';
-import { basename, extname, join, resolve } from 'path';
+import { basename, dirname, extname, join, resolve } from 'path';
 import { FileWatcher } from '../tools/file-watcher';
 import { zipFile } from '../tools/zip';
 import { getHashesFromFileContent, hashFile } from './lib/get-hash';
 import { getRomSystemId } from './lib/rom-system';
-import { getFileList, moveFiles, replaceExtension } from '../tools/file';
+import { getFileList, getRelativePath, moveFiles, replaceExtension } from '../tools/file';
 import { romModel } from '../models/rom.model';
 import { findRom } from './lib/find-rom';
 import { getTmpFolder } from '../tools/tmp';
@@ -81,9 +81,9 @@ async function saveRomFile(source: string, targetPath: string, system: string, i
   if (!targetPath) {
     throw new Error('target path is missing');
   }
-  await mkdir(join(targetPath, system, id), { recursive: true });
   let fileName = basename(source);
-  let targetFilePath = join(targetPath, system, id, fileName);
+  let targetFilePath = join(targetPath, getRelativePath(system, id), fileName);
+  await mkdir(dirname(targetFilePath), { recursive: true });
 
   if (extname(fileName) === '.zip') {
     await rename(source, targetFilePath);
