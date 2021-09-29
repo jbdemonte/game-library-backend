@@ -1,4 +1,4 @@
-const order = ['fr', 'ss', 'eu', 'us', 'wor', 'jp'];
+const order = ['ss', 'fr', 'eu', 'us', 'wor', 'jp'];
 
 function getByLng<T extends ({ region?: string; langue?: string })>(items: T[]): T {
   return items.reduce((selected, current) => {
