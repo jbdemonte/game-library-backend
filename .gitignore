@@ -6,6 +6,7 @@ dist
 /dropzone
 /docker
 /roms
+/scrap
 /data/*
 !/data/README.md
 screenscraper-credentials.json

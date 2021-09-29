@@ -36,3 +36,17 @@ export function removeCredentials(url: string): string {
   });
   return url;
 }
+
+export function addCredentials(url: string): string {
+  const account = getAccount();
+  return `${url}&devid=${credentials.devid}&devpassword=${credentials.devpassword}&softname=${credentials.softname}&ssid=${account.ssid}&sspassword=${account.sspassword}`;
+}
+
+// some media are bad encoded and fails the download
+// https://clone.screenscraper.fr/api2/mediaJeu.php? ... &systemeid=48&jeuid=38064&media=box-scan(us)[2](Coleco # 2429)
+export function fixMediaPart(url: string): string {
+  url = url.replace(/&media=([^&]+)/, function (match, value) {
+    return `&media=${encodeURIComponent(decodeURIComponent(value))}`;
+  });
+  return url;
+}

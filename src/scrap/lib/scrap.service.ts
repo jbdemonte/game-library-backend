@@ -3,8 +3,12 @@ import { noIntroDB, NoIntroGame } from '../../no-intro';
 import { GameDocument, gameModel } from '../../models/game.model';
 import { getScrapConfig } from '../../config';
 import { getSystem } from '../../tools/systems';
-import { getGameData } from '../../screenscraper';
+import { getFileContent, getGameData } from '../../screenscraper';
 import { sleep } from '../../tools/time';
+import { join } from 'path';
+import { GameResume } from '../../screenscraper/tools/resume';
+import { mkdir, writeFile } from 'fs/promises';
+import { fileExists, getRelativePath } from '../../tools/file';
 
 const config = getScrapConfig();
 
@@ -109,9 +113,38 @@ async function getGameFromScreenscraper(rom: RomDocument, game: GameDocument | n
       game.synopsis = data.synopsis;
       game.grade = data.grade;
       game.players = data.players;
-      game.raw = data.raw;
+      await downloadAllMediaFromScreenscraper(game, data, join(config.scrapPath, getRelativePath(game.system, game.id)))
       return game;
     }
   }
   return null;
 }
+
+
+export async function downloadAllMediaFromScreenscraper(game: GameDocument, resume: GameResume, dir: string) {
+  await mkdir(dir, { recursive: true });
+  await writeFile(join(dir, 'game.json'), JSON.stringify(resume.raw, null, 2), 'utf-8');
+
+  for (const media of resume.medias) {
+    const fileName = `${media.type}_${media.region}.${media.format}`;
+    const filePath = join(dir, fileName);
+    const exists = await fileExists(filePath);
+
+    if (!exists) {
+      console.log(`downloading ${game.id} ${game.name} : ${fileName}`);
+      const data = await getFileContent(media.url, config.retry);
+      if (data) {
+        await writeFile(filePath, data);
+      } else {
+        continue;
+      }
+    }
+    game.medias.push({
+      type: media.type,
+      region: media.region,
+      format: media.format,
+      file: fileName
+    });
+  }
+}
+

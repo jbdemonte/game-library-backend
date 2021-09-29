@@ -2,7 +2,7 @@ import { decode } from 'html-entities';
 import mediaToDownload from '../../data/media-to-download-screenscraper.json';
 import { I_SS_Game, I_SS_Media, I_SS_RomFound } from '../../interfaces/screenscraper-game.interface';
 import { getTextByLng } from './utils';
-import { removeCredentials } from './url';
+import { fixMediaPart, removeCredentials } from './url';
 
 export function getMediaResume(media: I_SS_Media) {
   return {
@@ -42,7 +42,7 @@ export interface GameResume {
 export function getGameResume(raw: I_SS_Game): GameResume {
   const game = {
     ...raw,
-    medias: raw.medias.map(media => ({...media, url: removeCredentials(media.url)}))
+    medias: raw.medias.map(media => ({...media, url: removeCredentials(fixMediaPart(media.url))}))
   }
   return {
     id: game.id,

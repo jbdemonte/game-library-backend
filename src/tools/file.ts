@@ -1,5 +1,5 @@
-import { stat } from 'fs/promises';
-import { readdir, rename } from 'fs/promises';
+import { constants } from 'fs';
+import { access, stat, readdir, rename } from 'fs/promises';
 import { basename, join } from 'path';
 
 function isSystemFile(name: string) {
@@ -39,4 +39,22 @@ export async function moveFiles(files: string[], destination: string) {
     throw new Error('destination is empty')
   }
   await Promise.all(files.map(file => rename(file, join(destination, basename(file)))));
+}
+
+export async function fileExists(filePath: string): Promise<boolean> {
+  try {
+    await access(filePath, constants.R_OK);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
+// Return a Game / Rom relative path
+export function getRelativePath(system: string, id: string): string {
+  return join(
+    system,
+    id.substring(id.length - 2),
+    id
+  );
 }

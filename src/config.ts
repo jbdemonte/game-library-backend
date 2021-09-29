@@ -28,14 +28,20 @@ export const getDatabaseConfig = () => ({
   debug: process.env.MONGODB_DB_DEBUG === '1'
 });
 
-export const getScrapConfig = () => ({
-  noIntroParentPath: 'data',
-  retry: parseInt(process.env.SCRAP_RETRY || '') || 5,
-  sleepTimeOnIdle: 1000 * (parseInt(process.env.SLEEP_TIME_ON_IDLE || '') || 60),
-  sleepTimeBeforeScrapping: (1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_DOWNLOADING_FILE || '') || 0)) || 100,
-  durationBetweenTwoScraps: 1000  * (parseInt(process.env.SLEEP_TIME_BETWEEN_TWO_SCRAPS || '') || 10),
-  durationBeforeRetryingAFailedScrap: 1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP || '') || 24 * 3600),
-});
+export const getScrapConfig = () => {
+  if (!process.env.SCRAP_PATH) {
+    throw new Error('SCRAP_PATH is empty');
+  }
+  return {
+    scrapPath: process.env.SCRAP_PATH,
+    noIntroParentPath: 'data',
+    retry: parseInt(process.env.SCRAP_RETRY || '') || 5,
+    sleepTimeOnIdle: 1000 * (parseInt(process.env.SLEEP_TIME_ON_IDLE || '') || 60),
+    sleepTimeBeforeScrapping: (1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_DOWNLOADING_FILE || '') || 0)) || 250,
+    durationBetweenTwoScraps: 1000 * (parseInt(process.env.SLEEP_TIME_BETWEEN_TWO_SCRAPS || '') || 10),
+    durationBeforeRetryingAFailedScrap: 1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP || '') || 24 * 3600),
+  };
+};
 
 export const getScreenscraperCredentials = () => ({
   softname: process.env.SCREENSCRAPER_SOFTNAME ?? '',

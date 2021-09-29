@@ -1,5 +1,24 @@
 import { Document, model, Model, Schema } from 'mongoose';
 
+export interface IMedia {
+  type: string;
+  region?: string;
+  format: string;
+  file: string;
+}
+
+export interface MediaDocument extends IMedia, Document {}
+
+const MediaSchema = new Schema<MediaDocument>(
+  {
+    type: { type: String, required: true},
+    region: { type: String},
+    format: { type: String, required: true},
+    file: { type: String, required: true},
+  },
+  { _id : false },
+)
+
 export interface IGame {
   system: string;
   name: string;
@@ -7,7 +26,7 @@ export interface IGame {
   synopsis?: string;
   grade?: number;
   players?: number;
-  raw?: any;
+  medias: IMedia[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -24,7 +43,7 @@ const GameSchema = new Schema<GameDocument, GameModel>(
     synopsis: { type: String },
     grade: { type: Number },
     players: { type: Number },
-    raw: { type: Schema.Types.Mixed },
+    medias: { type: [MediaSchema], default: [] },
   },
   { timestamps: true }
 );
