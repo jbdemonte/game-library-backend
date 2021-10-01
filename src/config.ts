@@ -1,6 +1,13 @@
 import { config as loadDotEnv } from 'dotenv';
 loadDotEnv();
 
+export const getTempPath = () => {
+  if (!process.env.TMP_PATH) {
+    throw new Error('TMP_PATH is empty');
+  }
+  return process.env.TMP_PATH;
+}
+
 export const getDropzoneConfig = () => {
   if (!process.env.DROPZONE_PATH) {
     throw new Error('DROPZONE_PATH is empty');

@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { GameResume, getGameResume } from './tools/resume';
 import { nextAccount } from './tools/user-account';
 import { addCredentials, buildURL } from './tools/url';
 import { sleep } from '../tools/time';
 import { getScrapConfig } from '../config';
+import { request } from './tools/request';
 
 const config = getScrapConfig();
 
@@ -20,7 +20,7 @@ export async function getGameData(params: GetGameInfoParams): Promise<GameResume
     systemeid: params.system,
   })
   try {
-    const { data: { response: { jeu }} } = await axios.request({ url, method: 'GET' });
+    const { data: { response: { jeu }} } = await request({ url, method: 'GET' });
     return getGameResume(jeu);
   } catch (error) {
     if ((error as any).response?.status === 430) { // quota exceeded
@@ -37,7 +37,7 @@ export async function getGameData(params: GetGameInfoParams): Promise<GameResume
 export async function getFileContent(url: string, retry: number): Promise<any> {
   await sleep(config.sleepTimeBeforeScrapping);
   try {
-    const { data } = await axios.request({
+    const { data } = await request({
       url: addCredentials(url),
       method: 'GET',
       responseType: 'arraybuffer',

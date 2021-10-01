@@ -20,6 +20,7 @@
     "html-entities": "^2.3.2",
     "mongoose": "^6.0.8",
     "p7zip": "^5.0.2",
+    "socks-proxy-agent": "^6.1.0",
     "xml-js": "^1.6.11",
     "yauzl": "^2.10.0",
     "yazl": "^2.5.1"
