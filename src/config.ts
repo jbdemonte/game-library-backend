@@ -47,6 +47,7 @@ export const getScrapConfig = () => {
     sleepTimeBeforeScrapping: (1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_DOWNLOADING_FILE || '') || 0)) || 250,
     durationBetweenTwoScraps: 1000 * (parseInt(process.env.SLEEP_TIME_BETWEEN_TWO_SCRAPS || '') || 10),
     durationBeforeRetryingAFailedScrap: 1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_RETRYING_A_FAILED_SCRAP || '') || 24 * 3600),
+    scrapTimeout: 1000 * (parseInt(process.env.SCRAP_TIMEOUT || '') || 60),
   };
 };
 

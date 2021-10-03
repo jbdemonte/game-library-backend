@@ -2,6 +2,9 @@ import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { SocksProxyAgent } from 'socks-proxy-agent';
 import { getProxy, nextProxy } from '../../proxies';
 import { getDefaultHeaders } from '../../tools/http';
+import { getScrapConfig } from '../../config';
+
+const { scrapTimeout } = getScrapConfig();
 
 export async function request<T = any, R = AxiosResponse<T>>(base: AxiosRequestConfig): Promise<R> {
   const proxy1 = getProxy();
@@ -15,18 +18,23 @@ export async function request<T = any, R = AxiosResponse<T>>(base: AxiosRequestC
   let proxy = proxy1;
 
   while (true) {
-    console.log(`requesting using ${proxy.type}:${proxy.host}:${proxy.port} : ${config.url}`)
+    console.log(`requesting using ${proxy.type}:${proxy.host}:${proxy.port} : ${config.url}`);
+    const source = axios.CancelToken.source();
+    const cancelToken = source.token;
     const client = axios.create({
-      //httpsAgent: new SocksProxyAgent(`socks5://${proxy.host}:${proxy.port}`)
       httpsAgent: new SocksProxyAgent({
         host: proxy.host,
         port: proxy.port,
         type: proxy.type === 'socks5' ? 5 : 4
       })
     });
+    const cancelTimeout = setTimeout(() => source.cancel('timeout'), scrapTimeout);
     try {
-      return await client.request<T, R>(config);
+      const res = await client.request<T, R>({...config, cancelToken});
+      clearTimeout(cancelTimeout);
+      return res;
     } catch (err) {
+      clearTimeout(cancelTimeout);
       if ((err as any).response) {
         throw err;
       }
