@@ -4,7 +4,7 @@ import { downloadProxyList } from './lib/download';
 import { sortProxyList } from './lib/sort';
 
 const TTL = 86400;
-const countryCodes = ['FR', 'IT', 'GB', 'CH'];
+const countryCodes = ['FR', 'IT', 'GB', 'CH', 'UA', 'RO', 'PL', 'HR', 'AL'];
 
 let proxies: IProxy[] = [];
 let proxyId = 0;
