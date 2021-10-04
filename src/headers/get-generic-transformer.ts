@@ -1,6 +1,7 @@
 /**
  * Returns the dedicated stream transformer to manipulate the ROM binary content
  * https://docs.retroachievements.org/Game-Identification/
+ * http://snarfblam.com/files/Hasher/1.0%20Readme.html
  */
 import { extname } from 'path';
 import { NesTransformer } from './transformers/nes.transformer';

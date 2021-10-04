@@ -12,7 +12,7 @@ Download the [P/C XML](https://datomatic.no-intro.org/index.php?page=download&s=
 The dropzone folder is initiated with a folder for each system (`nes`, `snes`...).
 
 ROMs can be dropped either in the main folder if its system can be guessed based on its file extension (i.e.  `xxx.v64` => `n64`) or in its dedicated system folder.
-When a rom is dropped in a sub-folder (i.e. `dropzone/n64`), the rom is associated to this system, there is no error detection.
+When a rom is dropped in a sub-folder (e.g. `dropzone/n64`), the rom is associated to this system, there is no error detection.
 
 ROMs can be compressed in `zip` or `7z`.
 
@@ -51,6 +51,13 @@ For now, this software does not have official software credentials required by s
 This software also accepts several user [credentials](screenscraper-credentials.example.json) which are used randomly to avoid account limitation.
 
 To avoid IP ban, this software use a proxy list scrapped from [free-proxy.cz](http://free-proxy.cz).
+
+# Misc
+
+## Game Gear's roms
+
+Some Game Gear roms are using the `.sms` extension because they are Game Gear cartridge using the Game Gear's SMS-compatible mode.  
+e.g. `Castle of Illusion Starring Mickey Mouse (US - EU).sms`   md5 = `16b6ea96908c17d4389a5907710a0f4e`
 
 # Licence
 
