@@ -26,6 +26,7 @@ async function refreshProxyList() {
     list.push(...await downloadProxyList(countryCode))
   }
   if (list.length) {
+    proxyId = 0;
     proxies = sortProxyList(list);
     await saveToTmp(proxies);
   }
