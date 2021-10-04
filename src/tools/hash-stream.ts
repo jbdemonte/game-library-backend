@@ -7,6 +7,7 @@ type IHashes = Omit<IFileHash, 'name'>;
 
 export function hashStream<T extends Transform>(stream: Readable, genericTransformer?: T | undefined): Promise<IHashes> {
   return new Promise((resolve) => {
+    let ignoreGenericHash = false;
     const result: IHashes = {
       crc: '',
       md5: '',
@@ -14,7 +15,7 @@ export function hashStream<T extends Transform>(stream: Readable, genericTransfo
     };
 
     function resolveIfComplete() {
-      if (result.md5 && result.crc && result.size && (!genericTransformer || result.generic)) {
+      if (result.md5 && result.crc && result.size && (!genericTransformer || ignoreGenericHash || result.generic)) {
         if (result.generic && result.generic.md5 === result.md5) {
           delete result.generic; // no need to keep the same information, the transformer didn't changed anything
         }
@@ -47,6 +48,12 @@ export function hashStream<T extends Transform>(stream: Readable, genericTransfo
     copyStream2.pipe(crc32);
 
     if (genericTransformer) {
+
+      genericTransformer.on('ignore-hash', () => {
+        ignoreGenericHash = true;
+        resolveIfComplete();
+      })
+
       stream.pipe(genericTransformer);
       hashStream(genericTransformer)
         .then(hash => {

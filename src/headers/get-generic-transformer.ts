@@ -5,6 +5,7 @@
 import { extname } from 'path';
 import { NesTransformer } from './transformers/nes.transformer';
 import { N64Transformer } from './transformers/n64.transformer';
+import { SNesTransformer } from './transformers/snes.transformer';
 
 export function getGenericTransformer(file: string) {
   const extension = extname(file).toLowerCase();
@@ -13,5 +14,8 @@ export function getGenericTransformer(file: string) {
   }
   if (['.z64', '.n64', '.v64'].includes(extension)) {
     return new N64Transformer();
+  }
+  if (['.mgd', '.smc', '.sfc'].includes(extension)) {
+    return new SNesTransformer();
   }
 }
