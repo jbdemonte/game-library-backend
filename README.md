@@ -30,11 +30,15 @@ The no-intro database is used at first scrap level to identify known clones.
 
 ### [NES transformer](src/headers/transformers/nes.transformer.ts)
 
-NES roms can contain a 16 byte header, which is removed to calculate hashes.
+NES roms can contain a 16 bytes header, which is removed to calculate hashes.
+
+### [FDS transformer](src/headers/transformers/fds.transformer.ts)
+
+FDS roms can contain a 16 bytes header, which is removed to calculate hashes.
 
 ### [SNES transformer](src/headers/transformers/snes.transformer.ts)
 
-SNES roms can contain a 512 byte header, which is removed to calculate hashes.
+SNES roms can contain a 512 bytes header, which is removed to calculate hashes.
 
 ### [N64 transformer](src/headers/transformers/n64.transformer.ts)
 
