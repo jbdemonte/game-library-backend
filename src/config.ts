@@ -56,3 +56,8 @@ export const getScreenscraperCredentials = () => ({
   devid: process.env.SCREENSCRAPER_DEVID ?? '',
   devpassword: process.env.SCREENSCRAPER_DEVPASSWORD ?? '',
 });
+
+export const getServerConfig = () => ({
+  PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
+  HOSTNAME: process.env.HOSTNAME ?? '',
+});

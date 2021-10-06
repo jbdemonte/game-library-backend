@@ -2,7 +2,7 @@ import { startDropZoneScan } from './dropzone';
 import { database } from './tools/database';
 import { startScrapDaemon } from './scrap';
 import { startProxyDaemon } from './proxies';
-
+import { startAPI } from './api';
 
 (async () => {
 
@@ -13,5 +13,7 @@ import { startProxyDaemon } from './proxies';
   await startScrapDaemon();
 
   await startDropZoneScan();
+
+  startAPI();
 
 })();
