@@ -278,6 +278,13 @@
     "screenscraper": 104
   },
   {
+    "id": "pcfx",
+    "name": "PC-FX",
+    "type": "console",
+    "extensions": ["bin", "chd", "ccd", "img", "sub", "cue"],
+    "screenscraper": 72
+  },
+  {
     "id": "pce",
     "name": "PC Engine",
     "type": "console",
@@ -319,6 +326,13 @@
     "type": "console",
     "extensions": ["cbn", "ccd", "cue", "img", "iso", "pbp", "pbp"],
     "screenscraper": 57
+  },
+  {
+    "id": "saturn",
+    "name": "Sega Saturn",
+    "type": "console",
+    "extensions": ["chd", "cue", "bin", "mdf", "iso", "m3u"],
+    "screenscraper": 22
   },
   {
     "id": "scummvm",
