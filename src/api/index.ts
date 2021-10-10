@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { router as systems } from './systems';
+import { router as medias } from './medias';
 import { getServerConfig } from '../config';
 
 const config = getServerConfig();
@@ -12,6 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use('/systems', systems);
+app.use('/medias', medias);
 
 export function startAPI() {
   app.listen(config.PORT, config.HOSTNAME, () => {
