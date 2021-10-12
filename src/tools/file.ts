@@ -51,9 +51,9 @@ export async function fileExists(filePath: string): Promise<boolean> {
 }
 
 // Return a Game / Rom relative path
-export function getRelativePath(system: string, id: string): string {
+export function getRelativePath(systemId: string, id: string): string {
   return join(
-    system,
+    systemId,
     id.substring(id.length - 2),
     id
   );
