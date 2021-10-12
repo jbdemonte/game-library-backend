@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { romModel } from '../../models/rom.model';
+import { IRom, romModel } from '../../models/rom.model';
 import { mediaUrl } from '../../tools/media-url';
 import { MediaDocument } from '../../models/game.model';
+import { fileUrl } from '../../tools/file-url';
 
 const router = Router();
 
@@ -37,12 +38,13 @@ router.get('/:system/', async (req: Request, res: Response) => {
     { $match: { system: req.params.system, game: { $ne: null } } },
     { $group: { _id: '$game', roms: { $push: { id: '$_id', archive: '$archive', files: '$files' } } } },
     { $lookup: { from: 'games', localField: '_id', foreignField: '_id', as: 'game' } },
-    { $project: { _id: 0, roms: 1, game: { id: '$_id', name: 1, genres: 1, medias: 1, synopsis: 1, players: 1 } } },
+    { $project: { _id: 0, roms: 1, game: { id: '$_id', name: 1, genres: 1, grade: 1, medias: 1, synopsis: 1, players: 1 } } },
     { $unwind: '$game' }
   ]).exec();
 
   for (const item of items) {
     item.game.medias = item.game.medias.map((media: MediaDocument) => ({ type: media.type, region: media.region, url: mediaUrl(req.params.system, item.game.id, media) }))
+    item.roms = item.roms.map((rom: IRom & {id: string}) => ({ ...rom, archive: {...rom.archive, url: fileUrl(req.params.system, rom.id, rom.archive.name)} }))
   }
 
   res.send({ items });
