@@ -30,24 +30,40 @@ router.get('/', async (req: Request, res: Response) => {
   res.send({ status })
 });
 
+function castROM(system: string, rom: Pick<IRom, 'archive' | 'files'> & { _id: any }) {
+  const id: string = rom._id.toString();
+  return {
+    id: rom._id.toString(),
+    archive: {
+      ...rom.archive,
+      url: fileUrl(system, id, rom.archive.name)
+    },
+    files: rom.files,
+  };
+}
+
 /**
  * Returns game & rom listing for a system
  */
 router.get('/:system/', async (req: Request, res: Response) => {
-  const items = await romModel.aggregate([
+  const scraped = await romModel.aggregate([
     { $match: { system: req.params.system, game: { $ne: null } } },
-    { $group: { _id: '$game', roms: { $push: { id: '$_id', archive: '$archive', files: '$files' } } } },
+    { $group: { _id: '$game', roms: { $push: { _id: '$_id', archive: '$archive', files: '$files' } } } },
     { $lookup: { from: 'games', localField: '_id', foreignField: '_id', as: 'game' } },
     { $project: { _id: 0, roms: 1, game: { id: '$_id', name: 1, genres: 1, grade: 1, medias: 1, synopsis: 1, players: 1 } } },
     { $unwind: '$game' }
   ]).exec();
 
-  for (const item of items) {
+  const castROMToSystem = castROM.bind(null, req.params.system);
+
+  for (const item of scraped) {
     item.game.medias = item.game.medias.map((media: MediaDocument) => ({ type: media.type, region: media.region, url: mediaUrl(req.params.system, item.game.id, media) }))
-    item.roms = item.roms.map((rom: IRom & {id: string}) => ({ ...rom, archive: {...rom.archive, url: fileUrl(req.params.system, rom.id, rom.archive.name)} }))
+    item.roms = item.roms.map(castROMToSystem)
   }
 
-  res.send({ items });
+  const roms = await romModel.find({ system: req.params.system, game: { $eq: null } }, { archive: 1, files: 1}).lean();
+
+  res.send({ scraped, roms: roms.map(castROMToSystem) });
 });
 
 export {
