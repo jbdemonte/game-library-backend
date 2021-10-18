@@ -1,6 +1,13 @@
 import { config as loadDotEnv } from 'dotenv';
 loadDotEnv();
 
+export const getAPIURL = () => {
+  if (!process.env.API_URL) {
+    throw new Error('API_URL is empty');
+  }
+  return process.env.API_URL;
+}
+
 export const getTempPath = () => {
   if (!process.env.TMP_PATH) {
     throw new Error('TMP_PATH is empty');
