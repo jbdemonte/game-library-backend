@@ -27,6 +27,7 @@ export interface IGame {
   synopsis?: string;
   grade?: number;
   players?: number;
+  date?: string;
   medias: IMedia[];
   createdAt: Date;
   updatedAt: Date;
@@ -45,6 +46,7 @@ const GameSchema = new Schema<GameDocument, GameModel>(
     synopsis: { type: String },
     grade: { type: Number },
     players: { type: Number },
+    date: { type: String },
     medias: { type: [MediaSchema], default: [] },
   },
   { timestamps: true }

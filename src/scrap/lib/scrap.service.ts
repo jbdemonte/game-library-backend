@@ -119,6 +119,7 @@ async function getGameFromScreenscraper(rom: RomDocument, game: GameDocument | n
       game.synopsis = data.synopsis;
       game.grade = data.grade;
       game.players = data.players;
+      game.date = data.date;
       await downloadAllMediaFromScreenscraper(game, data, join(config.scrapPath, getRelativePath(game.system, game.id)))
       return game;
     }

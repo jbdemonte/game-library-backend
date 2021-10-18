@@ -50,7 +50,7 @@ router.get('/:system/', async (req: Request, res: Response) => {
     { $match: { system: req.params.system, game: { $ne: null } } },
     { $group: { _id: '$game', roms: { $push: { _id: '$_id', archive: '$archive', files: '$files' } } } },
     { $lookup: { from: 'games', localField: '_id', foreignField: '_id', as: 'game' } },
-    { $project: { _id: 0, roms: 1, game: { id: '$_id', name: 1, genres: 1, grade: 1, medias: 1, synopsis: 1, players: 1 } } },
+    { $project: { _id: 0, roms: 1, game: { id: '$_id', name: 1, genres: 1, grade: 1, date: 1, medias: 1, synopsis: 1, players: 1 } } },
     { $unwind: '$game' }
   ]).exec();
 
