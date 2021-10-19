@@ -1,4 +1,6 @@
-const order = ['ss', 'fr', 'eu', 'us', 'wor', 'jp'];
+import { getScreenscraperRegionOrder } from '../../config';
+
+const order = getScreenscraperRegionOrder();
 
 function getByLng<T extends ({ region?: string; langue?: string })>(items: T[]): T {
   return items.reduce((selected, current) => {

@@ -64,6 +64,13 @@ export const getScreenscraperCredentials = () => ({
   devpassword: process.env.SCREENSCRAPER_DEVPASSWORD ?? '',
 });
 
+export const getScreenscraperRegionOrder = () => {
+  if (!process.env.SCREENSCRAPER_REGION_ORDER) {
+    throw new Error('SCREENSCRAPER_REGION_ORDER is empty');
+  }
+  return process.env.SCREENSCRAPER_REGION_ORDER.toLowerCase().split(',');
+}
+
 export const getServerConfig = () => ({
   PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
   HOSTNAME: process.env.HOSTNAME ?? '',
