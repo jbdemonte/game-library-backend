@@ -75,3 +75,7 @@ export const getServerConfig = () => ({
   PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
   HOSTNAME: process.env.HOSTNAME ?? '',
 });
+
+
+export const areCronEnabled = process.env.CRON_ENABLED !== '0';
+export const isApiEnabled = process.env.API_ENABLED !== '0';

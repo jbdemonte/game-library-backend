@@ -3,17 +3,26 @@ import { database } from './tools/database';
 import { startScrapDaemon } from './scrap';
 import { startProxyDaemon } from './proxies';
 import { startAPI } from './api';
+import { areCronEnabled, isApiEnabled } from './config';
 
 (async () => {
 
   await database.connect();
 
-  await startProxyDaemon();
+  console.log(`CRON: ${areCronEnabled ? 'ON' : 'OFF'}`);
 
-  await startScrapDaemon();
+  console.log(`API: ${isApiEnabled ? 'ON' : 'OFF'}`);
 
-  await startDropZoneScan();
+  if (areCronEnabled) {
+    await startProxyDaemon();
 
-  startAPI();
+    await startScrapDaemon();
+
+    await startDropZoneScan();
+  }
+
+  if (isApiEnabled) {
+    startAPI();
+  }
 
 })();
