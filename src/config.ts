@@ -1,4 +1,5 @@
 import { config as loadDotEnv } from 'dotenv';
+import { resolve } from 'path';
 loadDotEnv();
 
 export const getAPIURL = () => {
@@ -69,6 +70,13 @@ export const getScreenscraperRegionOrder = () => {
     throw new Error('SCREENSCRAPER_REGION_ORDER is empty');
   }
   return process.env.SCREENSCRAPER_REGION_ORDER.toLowerCase().split(',');
+}
+
+export const getScreenscraperCredentialFile = () => {
+  if (!process.env.SCREENSCRAPER_CREDENTIALS_FILE) {
+    throw new Error('SCREENSCRAPER_CREDENTIALS_FILE is empty');
+  }
+  return resolve(process.env.SCREENSCRAPER_CREDENTIALS_FILE);
 }
 
 export const getServerConfig = () => ({

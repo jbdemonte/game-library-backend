@@ -1,7 +1,12 @@
 import { ISSAccount } from '../../interfaces/screenscraper-account.interface';
 import { shuffle } from '../../tools/array';
+import { getScreenscraperCredentialFile } from '../../config';
 
-const accounts = shuffle<ISSAccount>(require('../../../screenscraper-credentials.json'));
+function isISSAccount(item: any) : item is ISSAccount {
+  return typeof item === 'object' && Object.keys(item).length === 2 && typeof item.ssid === 'string' && typeof item.sspassword === 'string';
+}
+
+const accounts = shuffle((require(getScreenscraperCredentialFile()) as any[]).filter(isISSAccount));
 
 let accountId = 0;
 

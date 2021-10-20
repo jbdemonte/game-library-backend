@@ -9,4 +9,3 @@ dist
 /scrap
 /data/*
 !/data/README.md
-screenscraper-credentials.json
