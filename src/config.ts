@@ -47,9 +47,12 @@ export const getScrapConfig = () => {
   if (!process.env.SCRAP_PATH) {
     throw new Error('SCRAP_PATH is empty');
   }
+  if (!process.env.NO_INTRO_PATH) {
+    throw new Error('NO_INTRO_PATH is empty');
+  }
   return {
     scrapPath: process.env.SCRAP_PATH,
-    noIntroParentPath: 'data',
+    noIntroPath: process.env.NO_INTRO_PATH,
     retry: parseInt(process.env.SCRAP_RETRY || '') || 5,
     sleepTimeOnIdle: 1000 * (parseInt(process.env.SLEEP_TIME_ON_IDLE || '') || 60),
     sleepTimeBeforeScrapping: (1000 * (parseInt(process.env.SLEEP_TIME_BEFORE_DOWNLOADING_FILE || '') || 0)) || 250,

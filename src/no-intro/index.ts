@@ -11,7 +11,7 @@ class NoIntroDB {
   constructor() {}
 
   async connect(path: string) {
-    const entries = await readdir(path, { withFileTypes: true })
+    const entries = await readdir(path, { withFileTypes: true });
     this.files = entries
       .filter(entry => !entry.isDirectory() && extname(entry.name) === '.dat')
       .map(entry => join(path, entry.name));

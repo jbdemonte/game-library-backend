@@ -1,17 +1,11 @@
 import { noIntroDB } from '../no-intro';
-import { getNoIntroDataPath } from './lib/no-intro-folder';
 import { scrapNextFile } from './lib/scrap.service';
 import { getScrapConfig } from '../config';
 
 const config = getScrapConfig();
 
 export async function startScrapDaemon() {
-  const dataPath = await getNoIntroDataPath(config.noIntroParentPath);
-  if (!dataPath) {
-    throw new Error('No-Intro PC XML folder not found');
-  }
-  await noIntroDB.connect(dataPath);
-
+  await noIntroDB.connect(config.noIntroPath);
   setImmediate(proceed);
 }
 
