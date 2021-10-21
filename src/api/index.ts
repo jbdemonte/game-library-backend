@@ -13,9 +13,11 @@ if (process.env.NODE_ENV === 'development') {
   app.use(cors());
 }
 
-app.use('/systems', systems);
-app.use('/medias', medias);
-app.use('/download', download);
+app.use('/api/systems', systems);
+app.use('/api/medias', medias);
+app.use('/api/download', download);
+
+app.use(express.static('public'));
 
 export function startAPI() {
   app.listen(config.PORT, config.HOSTNAME, () => {

@@ -4,7 +4,9 @@
   "license": "CC-BY-NC-SA-4.0",
   "scripts": {
     "build": "tsc",
-    "dev": "tsnd --respawn --transpile-only src/index.ts"
+    "build:docker": "docker build -t game-library --build-arg FRONT_TAG=$(git ls-remote https://github.com/jbdemonte/game-library-frontend.git HEAD | awk '{ print $1}') .",
+    "start:dev": "tsnd --respawn --transpile-only src/index.ts",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

@@ -7,5 +7,6 @@ dist
 /docker
 /roms
 /scrap
+/tmp
 /data/*
 !/data/README.md
